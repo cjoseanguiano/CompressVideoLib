@@ -23,4 +23,12 @@
         android:gravity="center"
         android:text="Compress Example 2" />
 
+    <Button
+        android:id="@+id/btnExample3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Trimmer Video 3" />
 </RelativeLayout>

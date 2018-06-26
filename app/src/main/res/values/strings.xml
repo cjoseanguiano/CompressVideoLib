@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Compress Video</string>
+    <string name="trimmed_done">¡El recorte del video está completo!！</string>
+    <string name="trimming">Está recortando video...</string>
+    <string name="compressing">Compresión de video...</string>
+    <string name="compressed_done">La compresión de video está completa.</string>
+    <string name="video_shoot_tip">Arrastra para seleccionar el %d segundo clip que deseas publicar!</string>
 </resources>

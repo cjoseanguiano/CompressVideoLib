@@ -13,20 +13,51 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    dataBinding {
+        enabled = true
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+/*    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
     implementation project(':ffmpeg4android_lib')
+
+//    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.github.iknow4:android-utils-sdk:1.1.2'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'*/
+
+
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'com.android.support:appcompat-v7:27.1.1'
+        implementation project(':ffmpeg4android_lib')
+        implementation 'com.android.support:recyclerview-v7:27.1.1'
+        implementation 'com.github.iknow4:android-utils-sdk:1.1.2'
+        implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+        implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+        implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+        implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+        implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    }
 }
