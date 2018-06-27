@@ -25,13 +25,25 @@
         android:textSize="14dp" />
 
     <Button
+        android:id="@+id/validate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/size"
-        android:id="@+id/validate"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:gravity="center"
         android:layout_marginTop="90dp"
+        android:gravity="center"
         android:text="Validar peso del video" />
+
+
+    <Button
+        android:id="@+id/test2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/validate"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_marginTop="90dp"
+        android:gravity="center"
+        android:text="Test 2" />
 </RelativeLayout>

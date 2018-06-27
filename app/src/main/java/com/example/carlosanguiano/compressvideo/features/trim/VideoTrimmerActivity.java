@@ -78,14 +78,17 @@ public class VideoTrimmerActivity extends AppCompatActivity implements TrimVideo
         CompressVideoUtil.compress(this, in, out, new CompressVideoListener() {
             @Override
             public void onSuccess(String message) {
+                System.out.println("");
             }
 
             @Override
             public void onFailure(String message) {
+                System.out.println("");
             }
 
             @Override
             public void onFinish() {
+                System.out.println("");
                 if (mProgressDialog.isShowing()) mProgressDialog.dismiss();
                 finish();
             }
