@@ -34,10 +34,10 @@ import java.util.Locale;
 public class TrimVideoUtil {
 
   private static final String TAG = TrimVideoUtil.class.getSimpleName();
-  public static final long MIN_SHOOT_DURATION = 3000L;// 最小剪辑时间3s
-  public static final int VIDEO_MAX_TIME = 10;// 10秒
-  public static final long MAX_SHOOT_DURATION = VIDEO_MAX_TIME * 1000L;//视频最多剪切多长时间10s
-  public static final int MAX_COUNT_RANGE = 10;  //seekBar的区域内一共有多少张图片
+  public static final long MIN_SHOOT_DURATION = 3000L;
+  public static final int VIDEO_MAX_TIME = 10;
+  public static final long MAX_SHOOT_DURATION = VIDEO_MAX_TIME * 1000L;
+  public static final int MAX_COUNT_RANGE = 10;
   private static final int SCREEN_WIDTH_FULL = DeviceUtil.getDeviceWidth();
   public static final int RECYCLER_VIEW_PADDING = UnitConverter.dpToPx(35);
   public static final int VIDEO_FRAMES_WIDTH = SCREEN_WIDTH_FULL - RECYCLER_VIEW_PADDING * 2;
@@ -52,15 +52,6 @@ public class TrimVideoUtil {
     String start = convertSecondsToTime(startMs / 1000);
     String duration = convertSecondsToTime((endMs - startMs) / 1000);
 
-    /** 裁剪视频ffmpeg指令说明：
-     * ffmpeg -ss START -t DURATION -i INPUT -vcodec copy -acodec copy OUTPUT
-     -ss 开始时间，如： 00:00:20，表示从20秒开始；
-     -t 时长，如： 00:00:10，表示截取10秒长的视频；
-     -i 输入，后面是空格，紧跟着就是输入视频文件；
-     -vcodec copy 和 -acodec copy 表示所要使用的视频和音频的编码格式，这里指定为copy表示原样拷贝；
-     INPUT，输入视频文件；
-     OUTPUT，输出视频文件
-     */
     String cmd = "-ss " + start + " -t " + duration + " -i " + inputFile + " -vcodec copy -acodec copy " + outputFile;
     String[] command = cmd.split(" ");
     try {

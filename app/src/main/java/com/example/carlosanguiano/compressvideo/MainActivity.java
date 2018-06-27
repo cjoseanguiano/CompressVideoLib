@@ -1,35 +1,36 @@
 package com.example.carlosanguiano.compressvideo;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.carlosanguiano.compressvideo.features.select.VideoSelectActivity;
-import com.example.carlosanguiano.compressvideo.features.trim.VideoTrimmerActivity;
-
-//import com.example.carlosanguiano.compressvideo.features.trim.VideoTrimmerActivity;
+import com.example.carlosanguiano.compressvideo.databinding.ActivityTrimmerLayoutBindingImpl;
+import com.example.carlosanguiano.compressvideo.interfaces.TrimVideoListener;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TrimVideoListener {
 
     private Button btnExample1;
     private Button btnExample2;
     private Button btnExample3;
+    private Button btnExample4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
 
+        initView();
 
         btnExample1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Example1.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, Example1.class);
+//                startActivity(intent);
             }
         });
 
@@ -40,10 +41,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnExample3.setOnClickListener(new View.OnClickListener() {
+     /*   btnExample3.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActip`s, VideoSelectActivity.class);
+            startActivity(intent);
+        });*/
+
+        btnExample4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, VideoSelectActivity.class);
+                Intent intent = new Intent(MainActivity.this, Example3.class);
                 startActivity(intent);
             }
         });
@@ -53,12 +59,21 @@ public class MainActivity extends AppCompatActivity {
         btnExample1 = findViewById(R.id.btnExample1);
         btnExample2 = findViewById(R.id.btnExample2);
         btnExample3 = findViewById(R.id.btnExample3);
+        btnExample4 = findViewById(R.id.btnExample4);
     }
 
-/*
-    private void startAct(Class act) {
-        Intent intent = new Intent(this, act);
-        this.startActivity(intent);
+    @Override
+    public void onStartTrim() {
+
     }
-*/
+
+    @Override
+    public void onFinishTrim(String url) {
+
+    }
+
+    @Override
+    public void onCancel() {
+
+    }
 }

@@ -1,13 +1,21 @@
 package com.example.carlosanguiano.compressvideo;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.carlosanguiano.compressvideo.features.trim.VideoTrimmerActivity;
+import com.example.carlosanguiano.compressvideo.interfaces.TrimVideoListener;
+import com.example.carlosanguiano.compressvideo.utils.TrimVideoUtil;
+
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 
@@ -15,11 +23,13 @@ public class Example2 extends AppCompatActivity {
 
     private TextView fileSize;
     private TextView filePath;
-    private static String path1 = "/storage/81B6-1202/DCIM/Camera/20180625_132406.mp4"; // 1 Min
-    private static String path2 = "/storage/81B6-1202/DCIM/Camera/20180625_133936.mp4"; //4 Second
-    private static String path3 = "/storage/81B6-1202/DCIM/Camera/20180625_132406.mp4"; // 42 Min
-    private static String path4 = "/storage/emulated/0/VideoCompressor/Temp/20180625_184805.mp4"; // 1 Sec
+    private static String path1 = "/storage/81B6-1202/DCIM/Camera/20180623_215118.mp4";
+    //    private static String path2 = "/storage/81B6-1202/DCIM/Camera/Test01.mp4";
     private Button validate;
+    private int limitSize = 16777216; // 16 MB;
+    private long lengthFile = 0;
+    private File file;
+    public TrimVideoListener mOnTrimVideoListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +37,44 @@ public class Example2 extends AppCompatActivity {
         setContentView(R.layout.activity_example2);
         initView();
         filePath.setText(path1);
-        fileSize.setText(getFileSize(path2));
-        String pathCompleted = formatFileSize();
-        Toast.makeText(this, " " + pathCompleted, Toast.LENGTH_SHORT).show();
+        file = new File(path1);
+        int sizeFile = getFileSize(file);
+        fileSize.setText("" + sizeFile);
 
-        validate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        validate.setOnClickListener(view -> {
+            Log.i("onCreate", "onCreate: " + lengthFile);
+            Log.i("onCreate", "onCreate: " + limitSize);
+            if (lengthFile > limitSize) {
+                VideoTrimmerActivity.call(Example2.this, path1);
+            } else {
+//                MediaPlayer mediaPlayer = new MediaPlayer();
+//                mediaPlayer = MediaPlayer.create(Example2.this, Uri.parse("file://" + file.absolutePath))
+                MediaPlayer mediaPlayer = MediaPlayer.create(Example2.this, Uri.parse("file://" + file.getAbsolutePath()));
+                if (mediaPlayer != null) {
+                    mediaPlayer.getDuration();
+                    Log.i("onCreate", "onCreate: " + mediaPlayer.getDuration());
+                    String finalPath = "/storage/emulated/0/Android/data/com.example.carlosanguiano.compressvideo/cache";
+                    if (mOnTrimVideoListener != null) {
+//                        TrimVideoUtil.trim(this, path1, finalPath, 0, mediaPlayer.getDuration(), mOnTrimVideoListener);
+
+                    }
+
+                } else {
+                    Log.i("onCreate", "onCreate: ");
+
+                }
+
+                /*try {
+                    mediaPlayer.setDataSource(file.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
             }
         });
+    }
+
+    public void setOnTrimVideoListener(TrimVideoListener onTrimVideoListener) {
+        this.mOnTrimVideoListener = onTrimVideoListener;
     }
 
     private void initView() {
@@ -44,74 +83,49 @@ public class Example2 extends AppCompatActivity {
         validate = findViewById(R.id.validate);
     }
 
-    private String getFileSize(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            return "0 MB";
-        } else {
-            long size = file.length();
-            return (size / 1024f) / 1024f + " MB";
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mOnTrimVideoListener == null) {
+
         }
     }
 
-/*
-    public static String getStringSizeLengthFile() {
-        File files = new File(path2);
-        if (files.exists()){
 
-            size = files.length();
+    public int getFileSize(File file) {
+        DecimalFormat format = new DecimalFormat("#.##");
+
+        long KB = 1024;
+        long MB = KB * KB;
+        long GB = MB * KB;
+        long TB = GB * KB;
+
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("Expected a file");
         }
+        lengthFile = file.length();
+//        int lengthFile = 399184; //test KB = 389 KB
+//        int lengthFile = 152211406; // test MB = 145 MB;
+//        int lengthFile = (int) 6.3609118e+16; // test GB = 1 GB;
 
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        float sizeKb = 1024.0f;
-        float sizeMo = sizeKb * sizeKb;
-        float sizeGo = sizeMo * sizeKb;
-        float sizeTerra = sizeGo * sizeKb;
-
-
-        if (size < sizeMo) {
-            return df.format(size / sizeKb) + " KB";
-        } else if (size < sizeGo) {
-            return df.format(size / sizeMo) + " MB";
-        } else if (size < sizeTerra) {
-            return df.format(size / sizeGo) + " GB";
+        if (lengthFile > GB) {
+            Log.i("sizeFile", "getFileSize: " + format.format(lengthFile / GB) + " GB");
+            Toast.makeText(this, " " + format.format(lengthFile / GB) + " GB", Toast.LENGTH_SHORT).show();
+//            return Double.parseDouble(format.format(lengthFile / GB));
+            return (int) (lengthFile / GB);
         }
-        return "0";
+        if (lengthFile > MB) {
+            Log.i("sizeFile", "getFileSize: " + format.format(lengthFile / MB) + " MB");
+            Toast.makeText(this, " " + format.format(lengthFile / MB) + " MB", Toast.LENGTH_SHORT).show();
+            return (int) (lengthFile / MB);
+        }
+        if (lengthFile > KB) {
+            Log.i("sizeFile", "getFileSize: " + format.format(lengthFile / KB) + " KB");
+            Toast.makeText(this, " " + format.format(lengthFile / KB) + " KB", Toast.LENGTH_SHORT).show();
+            return (int) (lengthFile / KB);
+        }
+        Log.i("sizeFile", "getFileSize: " + format.format(lengthFile) + " B");
+        Toast.makeText(this, " " + format.format(lengthFile) + " B", Toast.LENGTH_SHORT).show();
+        return (int) lengthFile;
     }
-*/
-
-    public static String formatFileSize() {
-        File file = new File(path4);
-        long size = 0;
-
-        if (file.exists()) {
-            size = file.length();
-        }
-        String hrSize = null;
-
-        double b = size;
-        double k = size / 1024.0;
-        double m = ((size / 1024.0) / 1024.0);
-        double g = (((size / 1024.0) / 1024.0) / 1024.0);
-        double t = ((((size / 1024.0) / 1024.0) / 1024.0) / 1024.0);
-
-        DecimalFormat dec = new DecimalFormat("0.00");
-
-        if (t > 1) {
-            hrSize = dec.format(t).concat(" TB");
-        } else if (g > 1) {
-            hrSize = dec.format(g).concat(" GB");
-        } else if (m > 1) {
-            hrSize = dec.format(m).concat(" MB");
-        } else if (k > 1) {
-            hrSize = dec.format(k).concat(" KB");
-        } else {
-            hrSize = dec.format(b).concat(" Bytes");
-        }
-
-        return hrSize;
-    }
-
-
 }

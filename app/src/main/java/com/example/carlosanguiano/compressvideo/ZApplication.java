@@ -3,6 +3,7 @@ package com.example.carlosanguiano.compressvideo;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.carlosanguiano.compressvideo.file.FileUtils;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
@@ -26,6 +27,8 @@ public class ZApplication extends Application {
     BaseUtils.init(this);
     initImageLoader(this);
     initFFmpegBinary(this);
+    FileUtils.createApplicationFolder();
+
   }
 
   public static void initImageLoader(Context context) {
