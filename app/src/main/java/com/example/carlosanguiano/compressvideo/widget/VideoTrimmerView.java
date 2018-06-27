@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,11 +21,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.example.carlosanguiano.compressvideo.Example3;
+import com.example.carlosanguiano.compressvideo.Config;
 import com.example.carlosanguiano.compressvideo.R;
 import com.example.carlosanguiano.compressvideo.features.trim.VideoTrimmerAdapter;
 import com.example.carlosanguiano.compressvideo.interfaces.IVideoTrimmerView;
@@ -32,11 +32,11 @@ import com.example.carlosanguiano.compressvideo.interfaces.TrimVideoListener;
 import com.example.carlosanguiano.compressvideo.utils.TrimVideoUtil;
 import com.example.carlosanguiano.compressvideo.video.MediaController;
 
+import java.io.File;
+
 import iknow.android.utils.callback.SingleCallback;
 import iknow.android.utils.thread.BackgroundExecutor;
 import iknow.android.utils.thread.UiThreadExecutor;
-
-import java.io.File;
 
 import static com.example.carlosanguiano.compressvideo.utils.TrimVideoUtil.VIDEO_FRAMES_WIDTH;
 
@@ -53,15 +53,14 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private RangeSeekBarView mRangeSeekBarView;
     private LinearLayout mSeekBarLayout;
     private ImageView mRedProgressIcon;
-    private float mAverageMsPx;//每毫秒所占的px
-    private float averagePxMs;//每px所占用的ms毫秒
+    private float mAverageMsPx;
+    private float averagePxMs;
     private Uri mSourceUri;
     private String mFinalPath;
     private TrimVideoListener mOnTrimVideoListener;
     private int mDuration = 0;
     private VideoTrimmerAdapter mVideoThumbAdapter;
     private boolean isFromRestore = false;
-    //new
     private long mLeftProgressPos, mRightProgressPos;
     private long mRedProgressBarPos = 0;
     private long scrollPos = 0;
@@ -204,7 +203,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
 
     public void onVideoPause() {
         if (mVideoView.isPlaying()) {
-            seekTo(mLeftProgressPos);//复位
+            seekTo(mLeftProgressPos);
             mVideoView.pause();
             setPlayPauseViewIcon(false);
             mRedProgressIcon.setVisibility(GONE);
@@ -261,8 +260,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
 
     private String getTrimmedVideoPath() {
         if (mFinalPath == null) {
-            File file = mContext.getExternalCacheDir();
-            if (file != null) mFinalPath = file.getAbsolutePath();
+            File file = new File(mContext.getExternalCacheDir() + File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME);
+            mFinalPath = file.getAbsolutePath();
         }
         return mFinalPath;
     }
@@ -280,7 +279,13 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     }
 
     private void setPlayPauseViewIcon(boolean isPlaying) {
-        mPlayView.setImageResource(isPlaying ? R.drawable.icon_video_pause_black : R.drawable.icon_video_play_black);
+        if (isPlaying) {
+            mPlayView.setImageResource(R.drawable.icon_video_pause_black);
+            mPlayView.setVisibility(GONE);
+        } else {
+            mPlayView.setImageResource(R.drawable.icon_video_play_black);
+            mPlayView.setVisibility(VISIBLE);
+        }
     }
 
     private final RangeSeekBarView.OnRangeSeekBarChangeListener mOnRangeSeekBarChangeListener = new RangeSeekBarView.OnRangeSeekBarChangeListener() {
@@ -354,9 +359,6 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         }
     };
 
-    /**
-     * 水平滑动了多少px
-     */
     private int calcScrollXDistance() {
         LinearLayoutManager layoutManager = (LinearLayoutManager) mVideoThumbRecyclerView.getLayoutManager();
         int position = layoutManager.findFirstVisibleItemPosition();

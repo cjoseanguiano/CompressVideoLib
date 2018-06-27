@@ -17,60 +17,67 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:minHeight="?attr/actionBarSize"
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <TextView
+            <ImageView
                 android:id="@+id/cancelBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="center|center_vertical"
                 android:padding="10dp"
-                android:text="Atras"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:src="@drawable/ic_keyboard_backspace" />
 
             <ImageView
-                android:id="@+id/icon_video_play"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="12dp"
-                android:src="@drawable/icon_video_play_black" />
-
-            <TextView
                 android:id="@+id/finishBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center|center_vertical"
                 android:padding="10dp"
-                android:text="Terminar"
-                android:textColor="@android:color/holo_green_dark"
-                android:textSize="16sp" />
+                android:src="@drawable/ic_content_cut" />
 
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+
     <RelativeLayout
         android:id="@+id/layout_surface_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/layout"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
+        android:layout_marginTop="10dp"
         android:background="@android:color/black"
         android:gravity="center">
 
-        <VideoView
-            android:id="@+id/video_loader"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="visible">
+
+            <VideoView
+                android:id="@+id/video_loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/icon_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:src="@drawable/icon_video_play_black" />
+        </FrameLayout>
+
 
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/layout"

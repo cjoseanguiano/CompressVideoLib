@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Menu;
 
 import com.example.carlosanguiano.compressvideo.R;
 import com.example.carlosanguiano.compressvideo.databinding.ActivityTrimmerLayoutBindingImpl;

@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements TrimVideoListener
                 startActivity(intent);
             }
         });
-     /*   btnExample3.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActip`s, VideoSelectActivity.class);
-            startActivity(intent);
-        });*/
+        btnExample3.setOnClickListener(view -> {
+//            Intent intent = new Intent(this, VideoSelectActivity.class);
+//            startActivity(intent);
+        });
 
         btnExample4.setOnClickListener(new View.OnClickListener() {
             @Override

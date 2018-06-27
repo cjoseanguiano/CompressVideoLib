@@ -44,6 +44,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:layout_marginTop="90dp"
+        android:visibility="gone"
         android:gravity="center"
         android:text="Test 2" />
 </RelativeLayout>

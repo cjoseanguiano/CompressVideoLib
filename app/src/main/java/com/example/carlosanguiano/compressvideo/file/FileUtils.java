@@ -1,9 +1,6 @@
 package com.example.carlosanguiano.compressvideo.file;
 
-/*
-* By Jorge E. Hernandez (@lalongooo) 2015
-* */
-
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
@@ -11,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.example.carlosanguiano.compressvideo.Config;
+import com.example.carlosanguiano.compressvideo.ZApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,13 +19,11 @@ public class FileUtils {
 
     private static final String TAG = "FileUtils";
 
-    public static void createApplicationFolder() {
-        File f = new File(Environment.getExternalStorageDirectory(), File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME);
+    public static void createApplicationFolder(Context context) {
+        File f = new File(context.getExternalCacheDir(), File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME);
         f.mkdirs();
-        f = new File(Environment.getExternalStorageDirectory(), File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR);
-        f.mkdirs();
-        f = new File(Environment.getExternalStorageDirectory(), File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_TEMP_DIR);
-        f.mkdirs();
+//        f = new File(context.getExternalCacheDir(), File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_TEMP_DIR);
+//        f.mkdirs();
     }
 
     public static File saveTempFile(String fileName, Context context, Uri uri) {
@@ -40,7 +36,7 @@ public class FileUtils {
         try {
             in = resolver.openInputStream(uri);
 
-            mFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_TEMP_DIR, fileName);
+            mFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME, fileName);
             out = new FileOutputStream(mFile, false);
             byte[] buffer = new byte[1024];
             int read;

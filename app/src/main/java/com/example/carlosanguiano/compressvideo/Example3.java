@@ -107,7 +107,6 @@ public class Example3 extends AppCompatActivity {
     }
 
     public void compress(View v) {
-//        MediaController.getInstance().scheduleVideoConvert(tempFile.getPath());
         new VideoCompressor().execute();
     }
 

@@ -14,6 +14,7 @@ import android.util.Log;
 
 
 import com.example.carlosanguiano.compressvideo.Config;
+import com.example.carlosanguiano.compressvideo.ZApplication;
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -244,11 +245,9 @@ public class MediaController {
         int bitrate = 450000;
         int rotateRender = 0;
 
-        File cacheFile = new File(
-                Environment.getExternalStorageDirectory()
-                        + File.separator
-                        + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME
-                        + Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR,
+        File cacheFile = new File(ZApplication.getInstance().getExternalCacheDir()
+                + File.separator
+                + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME,
                 "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4"
         );
 
