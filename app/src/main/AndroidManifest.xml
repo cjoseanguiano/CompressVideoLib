@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".ZApplication"
+        android:name=".trimvideo.ZApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,9 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Example1" />
-        <activity android:name=".Example2" />
-        <activity android:name=".Example3"/>
-        <activity android:name=".features.trim.VideoTrimmerActivity" />
+        <activity android:name=".compresscomplete.Example2" />
+        <activity android:name=".compresscomplete.Example3"/>
+        <activity android:name=".trimvideo.features.trim.VideoTrimmerActivity" />
         <!--<activity android:name=".features.select.VideoSelectActivity" />-->
     </application>
 
